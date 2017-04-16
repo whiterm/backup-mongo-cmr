@@ -1,0 +1,1 @@
+30 5 * * *  /opt/scripts/cron_task.sh /opt/scripts/backup.sh
