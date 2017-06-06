@@ -34,7 +34,7 @@ else
 fi
 
 echo "extracting file $LOCAL_BACKUP_STORE_DIR/$fileName"
-cd $BACKUP_DIR && tar xvf $LOCAL_BACKUP_STORE_DIR/$fileName
+cd $BACKUP_DIR && tar xzvf $LOCAL_BACKUP_STORE_DIR/$fileName
 if [ $? -ne 0 ]; then
     echo "error with $1" >&2
     exit 1

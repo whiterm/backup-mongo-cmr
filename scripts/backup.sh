@@ -43,7 +43,8 @@ unlock_mongo() {
 
 archiving() {
     echo "archiving into $LOCAL_BACKUP_FILE"
-    tar cvf $LOCAL_BACKUP_FILE -C $BACKUP_DIR .
+    cd $BACKUP_DIR
+    tar -czvf $LOCAL_BACKUP_FILE ./
     if [ $? -ne 0 ]; then
         echo "error with $1" >&2
         unlock_mongo
