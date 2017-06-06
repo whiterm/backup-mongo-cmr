@@ -13,10 +13,12 @@ if [[ -z $MONGO_URL ]]; then
     exit 1
 fi
 
-cmri -ls $SERVER_BACKUP_STORE_DIR
-if [ $? -ne 0 ]; then
-    echo "error with $1" >&2
-    exit 1
+if [[ $@ != *'-local'* ]]; then
+    cmri -ls $SERVER_BACKUP_STORE_DIR
+    if [ $? -ne 0 ]; then
+        echo "error with $1" >&2
+        exit 1
+    fi
 fi
 
 mkdir -p $LOCAL_BACKUP_STORE_DIR
@@ -69,7 +71,21 @@ send_file() {
 lock_mongo
 archiving
 unlock_mongo
-send_file 3
 
-echo "list files in cloud $SERVER_BACKUP_STORE_DIR"
-cmri -ls $SERVER_BACKUP_STORE_DIR
+if [[ $@ == *'-local'* ]]; then
+    echo 'Don`t save on mail cloud'
+else
+    echo 'Saving on cloud'
+    send_file 3
+fi
+
+
+if [[ $@ == *'-local'* ]]; then
+    echo "list files on LOCAL_BACKUP_STORE_DIR $LOCAL_BACKUP_STORE_DIR"
+    ls -lah "$LOCAL_BACKUP_STORE_DIR"
+else
+    echo "list files in cloud $SERVER_BACKUP_STORE_DIR"
+    cmri -ls $SERVER_BACKUP_STORE_DIR
+fi
+
+
