@@ -1,23 +1,23 @@
 # backup-mongo-cmr
-Backup mongodb data on cloud mail ru
+A set of scripts to create backups of the Mongo database and save them in the `cloud.mail.ru`
 
-To start backup the scheduler
+To create backups on a schedule. The schedule changes occur in the file `/etc/cron.d/backup-cron`
 ``` 
     docker run -e MAILRU_USER=backup-mail@bk.ru -e MAILRU_PASSWORD=my_password --link mongodb:mongodb --volumes-from:mongodb phantomx/backup-mongo-cmr 
 ```
 
-To start backup in MODE local. Don`t save on mail cloud
+To create a backup and save it locally to disk. Backup will not be sent to the `cloud.mail.ru`
 ```
     mkdir -p `pwd`/tmp
     docker run --rm --link mongodb:mongodb --volumes-from=mongodb -v `pwd`/tmp:/backup phantomx/backup-mongo-cmr ./backup.sh -local
 ```
 
-To start only one backup mongo database
+To create a backup and save it to the `cloud.mail.ru`
 ```
     docker run -e MAILRU_USER=backup-mail@bk.ru -e MAILRU_PASSWORD=my_password --link mongodb:mongodb --volumes-from=mongodb phantomx/backup-mongo-cmr ./backup.sh
 ```
 
-To start only one restore mongo database
+Restore the Mongo database from an earlier backup
 ```
     docker run -e MAILRU_USER=backup-mail@bk.ru -e MAILRU_PASSWORD=my_password --link mongodb:mongodb --volumes-from=mongodb phantomx/backup-mongo-cmr ./restore.sh
 ```

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ARCHIVE_NAME="${ARCHIVE_NAME:-db_data_$(date +%Y_%m_%d-%H_%M_%S).tgz}"
+ARCHIVE_NAME="${ARCHIVE_NAME:-db_data_$(date +%Y_%m_%d-%H_%M_%S).7z}"
 LOCAL_BACKUP_STORE_DIR="${LOCAL_BACKUP_STORE_DIR:-/backup}"
 SERVER_BACKUP_STORE_DIR="${SERVER_BACKUP_STORE_DIR:-/backup/dev}"
 BACKUP_DIR="${BACKUP_DIR:-/data/db}"
@@ -43,7 +43,7 @@ unlock_mongo() {
 
 archiving() {
     echo "archiving into $LOCAL_BACKUP_FILE"
-    cd $BACKUP_DIR && tar -czvf $LOCAL_BACKUP_FILE ./
+    7z a $LOCAL_BACKUP_FILE -r ${BACKUP_DIR}/*
     if [ $? -ne 0 ]; then
         echo "error with $1" >&2
         unlock_mongo

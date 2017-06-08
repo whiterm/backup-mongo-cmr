@@ -2,7 +2,7 @@ FROM phantomx/cloud-cli:latest
 
 MAINTAINER Belyy Roman
 
-RUN apt-get update && apt-get install -y mongodb-clients cron rsyslog
+RUN apt-get update && apt-get install -y mongodb-clients cron rsyslog p7zip-full
 
 ENV LOCAL_BACKUP_STORE_DIR "/backup"
 ENV SERVER_BACKUP_STORE_DIR "/backup/dev"
